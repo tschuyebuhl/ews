@@ -39,33 +39,37 @@ func main() {
 
 ### Supported Feature matrix:
 
-| Category                         	| Operation            	| Supported*       	|
-|----------------------------------	|----------------------	|------------------	|
-| eDiscovery operations            	|                      	|                  	|
-| Exchange mailbox data operations 	|                      	|                  	|
-|                                  	| CreateItem operation 	| ✔️ (Email & Calendar)|
-|                                  	| GetUserPhoto      	| ✔️                |
-| Availability operations          	|                      	|                  	|
-|                                  	| GetUserAvailability  	| ✔️             	|
-|                                  	| GetRoomLists      	| ✔️             	|
-| Bulk transfer operations         	|                      	|                  	|
-| Delegate management operations   	|                      	|                  	|
-| Inbox rules operations           	|                      	|                  	|
-| Mail app management operations   	|                      	|                  	|
-| Mail tips operation              	|                      	|                  	|
-| Message tracking operations      	|                      	|                  	|
-| Notification operations          	|                      	|                  	|
-| Persona operations               	|                      	|                  	|
-|                                   | FindPeople            | ✔️             	|
-|                                   | GetPersona            | ✔️             	|
-| Retention policy operation       	|                      	|                  	|
-| Service configuration operation  	|                      	|                  	|
-| Sharing operations               	|                      	|                  	|
-| Synchronization operations       	|                      	|                  	|
-| Time zone operation              	|                      	|                  	|
-| Unified Messaging operations     	|                      	|                  	|
-| Unified Contact Store operations 	|                      	|                  	|
-| User configuration operations    	|                      	|                  	|
+| Category                         	| Operation            	 | Supported*       	    |
+|----------------------------------	|------------------------|-----------------------|
+| eDiscovery operations            	| 	                      | 	                     |
+| Exchange mailbox data operations 	| 	                      | 	                     |
+|                                  	| CreateItem operation 	 | ✔️ (Email & Calendar) |
+|                                  	| GetUserPhoto      	    | ✔️                    |
+|                                  	| FindItem      	        | ✔️(Email)             |
+|                                  	| GetItem      	         | ✔️      (Email)       |
+|                                  	| GetAttachment      	   | ✔️                    |
+|                                  	| DeleteItem      	      | ✔️       (Email)      |
+| Availability operations          	| 	                      | 	                     |
+|                                  	| GetUserAvailability  	 | ✔️             	      |
+|                                  	| GetRoomLists      	    | ✔️             	      |
+| Bulk transfer operations         	| 	                      | 	                     |
+| Delegate management operations   	| 	                      | 	                     |
+| Inbox rules operations           	| 	                      | 	                     |
+| Mail app management operations   	| 	                      | 	                     |
+| Mail tips operation              	| 	                      | 	                     |
+| Message tracking operations      	| 	                      | 	                     |
+| Notification operations          	| 	                      | 	                     |
+| Persona operations               	| 	                      | 	                     |
+|                                   | FindPeople             | ✔️             	      |
+|                                   | GetPersona             | ✔️             	      |
+| Retention policy operation       	| 	                      | 	                     |
+| Service configuration operation  	| 	                      | 	                     |
+| Sharing operations               	| 	                      | 	                     |
+| Synchronization operations       	| 	                      | 	                     |
+| Time zone operation              	| 	                      | 	                     |
+| Unified Messaging operations     	| 	                      | 	                     |
+| Unified Contact Store operations 	| 	                      | 	                     |
+| User configuration operations    	| 	                      | 	                     |
 
 * Not always 100% of fields are mapped.
 
@@ -79,6 +83,10 @@ Besides the operations supported above, few new operations under the namespace `
 * `ewsutil.GetUserPhotoBase64`
 * `ewsutil.GetUserPhotoURL`
 * `ewsutil.GetPersona`
+* `ewsutil.FindEmail`
+* `ewsutil.GetMail`
+* `ewsutil.DeleteMail`
+* `ewsutil.GetAttachment`
 
 NTLM is supported as well as Basic authentication
 
