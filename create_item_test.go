@@ -66,3 +66,129 @@ func Test_marshal_CalendarItem(t *testing.T) {
   </t:RequiredAttendees>
 </CalendarItem>`, string(xmlBytes))
 }
+
+func Test_marshal_SendMail(t *testing.T) {
+
+	m := Message{
+		ItemClass: "IPM.Note",
+		Subject:   "test",
+		Body: Body{
+			Body:     []byte("Test"),
+			BodyType: "Text",
+		},
+		Sender: OneMailbox{
+			Mailbox: Mailbox{
+				EmailAddress: "User1@example.com",
+			},
+		},
+	}
+
+	mb := make([]Mailbox, 1)
+
+	mb[0].EmailAddress = "User1@example.com"
+
+	m.ToRecipients.Mailbox = append(m.ToRecipients.Mailbox, mb...)
+
+	citem := &CreateItem{
+		MessageDisposition: "SendAndSaveCopy",
+		SavedItemFolderId:  SavedItemFolderId{DistinguishedFolderId{Id: "sentitems"}},
+	}
+	citem.Items.Message = append(citem.Items.Message, m)
+	xmlBytes, err := xml.MarshalIndent(citem, "", "  ")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	assert.Equal(t, `<m:CreateItem MessageDisposition="SendAndSaveCopy" SendMeetingInvitations="">
+  <m:SavedItemFolderId>
+    <t:DistinguishedFolderId Id="sentitems"></t:DistinguishedFolderId>
+  </m:SavedItemFolderId>
+  <m:Items>
+    <t:Message>
+      <t:ItemClass>IPM.Note</t:ItemClass>
+      <t:Subject>test</t:Subject>
+      <t:Body BodyType="Text">Test</t:Body>
+      <t:Sender>
+        <t:Mailbox>
+          <t:EmailAddress>User1@example.com</t:EmailAddress>
+        </t:Mailbox>
+      </t:Sender>
+      <t:ToRecipients>
+        <t:Mailbox>
+          <t:EmailAddress>User1@example.com</t:EmailAddress>
+        </t:Mailbox>
+      </t:ToRecipients>
+    </t:Message>
+  </m:Items>
+</m:CreateItem>`, string(xmlBytes))
+}
+
+func Test_marshal_SendMailWithAttachment(t *testing.T) {
+
+	m := Message{
+		ItemClass: "IPM.Note",
+		Subject:   "test",
+		Body: Body{
+			Body:     []byte("Test"),
+			BodyType: "Text",
+		},
+		Attachments: &CreateAttachments{CreateFileAttachment: []CreateFileAttachment{{
+			Name:           "Test.txt",
+			IsInline:       false,
+			IsContactPhoto: false,
+			Content:        "VGVzdCB0ZXh0",
+		}}},
+		Sender: OneMailbox{
+			Mailbox: Mailbox{
+				EmailAddress: "User1@example.com",
+			},
+		},
+	}
+
+	mb := make([]Mailbox, 1)
+
+	mb[0].EmailAddress = "User1@example.com"
+
+	m.ToRecipients.Mailbox = append(m.ToRecipients.Mailbox, mb...)
+
+	citem := &CreateItem{
+		MessageDisposition: "SendAndSaveCopy",
+		SavedItemFolderId:  SavedItemFolderId{DistinguishedFolderId{Id: "sentitems"}},
+	}
+	citem.Items.Message = append(citem.Items.Message, m)
+	xmlBytes, err := xml.MarshalIndent(citem, "", "  ")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	assert.Equal(t, `<m:CreateItem MessageDisposition="SendAndSaveCopy" SendMeetingInvitations="">
+  <m:SavedItemFolderId>
+    <t:DistinguishedFolderId Id="sentitems"></t:DistinguishedFolderId>
+  </m:SavedItemFolderId>
+  <m:Items>
+    <t:Message>
+      <t:ItemClass>IPM.Note</t:ItemClass>
+      <t:Subject>test</t:Subject>
+      <t:Body BodyType="Text">Test</t:Body>
+      <t:Sender>
+        <t:Mailbox>
+          <t:EmailAddress>User1@example.com</t:EmailAddress>
+        </t:Mailbox>
+      </t:Sender>
+      <t:ToRecipients>
+        <t:Mailbox>
+          <t:EmailAddress>User1@example.com</t:EmailAddress>
+        </t:Mailbox>
+      </t:ToRecipients>
+      <t:Attachments>
+        <t:FileAttachment>
+          <t:Name>Test.txt</t:Name>
+          <t:IsInline>false</t:IsInline>
+          <t:IsContactPhoto>false</t:IsContactPhoto>
+          <t:Content>VGVzdCB0ZXh0</t:Content>
+        </t:FileAttachment>
+      </t:Attachments>
+    </t:Message>
+  </m:Items>
+</m:CreateItem>`, string(xmlBytes))
+}

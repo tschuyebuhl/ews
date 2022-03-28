@@ -13,6 +13,12 @@ const (
 	ResponseClassError   ResponseClass = "Error"
 )
 
+const (
+	DeleteTypeHardDelete         string = "HardDelete"
+	DeleteTypeMoveToDeletedItems string = "MoveToDeletedItems"
+	DeleteTypeSoftDelete         string = "SoftDelete"
+)
+
 type Response struct {
 	ResponseClass ResponseClass `xml:"ResponseClass,attr"`
 	MessageText   string        `xml:"MessageText"`
@@ -115,3 +121,16 @@ func getRFC3339Offset(t time.Time) (string, error) {
 
 	return fmt.Sprintf("%s%02d:%02d", sign, hour, min), nil
 }
+
+type MimeContent struct {
+	CharacterSet string `xml:"CharacterSet,attr"`
+	InnerXML     string `xml:",innerxml"`
+}
+
+type EmailBody struct {
+	BodyType    string `xml:"BodyType,attr"`
+	IsTruncated string `xml:"IsTruncated,attr"`
+	InnerXML    string `xml:",innerxml"`
+}
+
+type BooleanType bool
