@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/Azure/go-ntlmssp"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httputil"
@@ -12,17 +13,15 @@ import (
 
 const (
 	soapStart = `<?xml version="1.0" encoding="utf-8" ?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		xmlns:m="http://schemas.microsoft.com/exchange/services/2006/messages" 
-		xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" 
-		xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  		<soap:Header>
-    		<t:RequestServerVersion Version="Exchange2013_SP1" />
-  		</soap:Header>
-  		<soap:Body>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:m="http://schemas.microsoft.com/exchange/services/2006/messages" xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+<soap:Header>
+	<t:RequestServerVersion Version="Exchange2013_SP1" />
+</soap:Header>
+<soap:Body>
 `
 	soapEnd = `
-</soap:Body></soap:Envelope>`
+</soap:Body>
+</soap:Envelope>`
 )
 
 type Config struct {
@@ -71,7 +70,12 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer req.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(req.Body)
 	logRequest(c, req)
 
 	req.SetBasicAuth(c.Username, c.Password)
@@ -88,7 +92,12 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(resp.Body)
 	logResponse(c, resp)
 
 	if resp.StatusCode != http.StatusOK {
