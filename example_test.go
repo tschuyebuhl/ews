@@ -30,7 +30,7 @@ func Test_Example(t *testing.T) {
 
 func testSendEmail(c Client, subject string) error {
 	return ewsutil.SendEmail(c,
-		[]string{"ihsan@picusguvenlik.onmicrosoft.com"},
+		[]string{"ihsan.ugur@biltekin.onmicrosoft.com"},
 		subject,
 		"<HTML><Body><p><b>The email body, as plain text</b></p></body></HTML>", true, nil)
 }
