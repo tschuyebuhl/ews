@@ -7,24 +7,23 @@ package main
 
 import (
 	"fmt"
-	"github.com/mhewedy/ews"
-	"github.com/mhewedy/ews/ewsutil"
+	"github.com/iubiltekin/ews"
+	"github.com/iubiltekin/ews/ewsutil"
 	"log"
 )
 
 func main() {
-
 	c := ews.NewClient(
 		"https://outlook.office365.com/EWS/Exchange.asmx",
-		"email@exchangedomain",
-		"password",
-		&ews.Config{Dump: true, NTLM: false},
+		"email",
+		"email-password",
+		&ews.Config{Dump: true, NTLM: true, SkipTLS: true},
 	)
 
 	err := ewsutil.SendEmail(c,
-		[]string{"mhewedy@gmail.com", "someone@else.com"},
+		[]string{"iubiltekin@gmail.com", "someone@else.com"},
 		"An email subject",
-		"The email body, as plain text",
+		"The email body, as plain text", false, nil,
 	)
 
 	if err != nil {
@@ -33,6 +32,7 @@ func main() {
 
 	fmt.Println("--- success ---")
 }
+
 
 ```
 > Note: if you are using an on-premises Exchange server (or even if you manage your servers at the cloud), you need to pass the username as `AD_DOMAINNAME\username` instead, for examle `MYCOMANY\mhewedy`.
