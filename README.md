@@ -75,7 +75,7 @@ func main() {
 
 ### Extras
 Besides the operations supported above, few new operations under the namespace `ewsutil` has been introduced:
-* `ewsutil.SendEmail` 
+* `ewsutil.SendEmail`  -update
 * `ewsutil.CreateEvent`
 * `ewsutil.ListUsersEvents`
 * `ewsutil.FindPeople`
@@ -83,10 +83,10 @@ Besides the operations supported above, few new operations under the namespace `
 * `ewsutil.GetUserPhotoBase64`
 * `ewsutil.GetUserPhotoURL`
 * `ewsutil.GetPersona`
-* `ewsutil.FindEmail`
-* `ewsutil.GetMail`
-* `ewsutil.DeleteMail`
-* `ewsutil.GetAttachment`
+* `ewsutil.FindEmail`  -new
+* `ewsutil.GetMail`  -new
+* `ewsutil.DeleteMail`  -new
+* `ewsutil.GetAttachment`  -new
 
 NTLM is supported as well as Basic authentication
 
