@@ -1,7 +1,7 @@
 package ewsutil
 
 import (
-	"github.com/mhewedy/ews"
+	"github.com/iubiltekin/ews"
 )
 
 func GetAttachment(c ews.Client, attachmentId ews.AttachmentId) (*ews.Attachments, error) {

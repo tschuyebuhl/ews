@@ -1,7 +1,7 @@
 package ewsutil
 
 import (
-	"github.com/mhewedy/ews"
+	"github.com/iubiltekin/ews"
 )
 
 func FindEmail(c ews.Client, q string, isEqual bool) (*ews.RootFolder, error) {

@@ -1,6 +1,6 @@
 package ewsutil
 
-import "github.com/mhewedy/ews"
+import "github.com/iubiltekin/ews"
 
 // SendEmail helper method to send Message
 func SendEmail(c ews.Client, to []string, subject, body string, isHtml bool, attachments []ews.CreateFileAttachment) error {
