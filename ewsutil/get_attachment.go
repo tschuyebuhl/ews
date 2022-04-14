@@ -4,7 +4,7 @@ import (
 	"github.com/iubiltekin/ews"
 )
 
-func GetAttachment(c ews.Client, attachmentId ews.AttachmentId) (*ews.Attachments, error) {
+func GetAttachment(c ews.Client, attachmentId ews.AttachmentId) (*ews.GetAttachments, error) {
 
 	req := &ews.GetAttachmentRequest{
 		Items: []ews.AttachmentItemMessage{{AttachmentId: attachmentId}},

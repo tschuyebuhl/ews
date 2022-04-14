@@ -32,7 +32,20 @@ type GetAttachmentResponseMessages struct {
 
 type GetAttachmentResponseMessage struct {
 	Response
-	Attachments Attachments `xml:"Attachments"`
+	Attachments GetAttachments `xml:"Attachments"`
+}
+
+type GetAttachments struct {
+	FileAttachment []GetFileAttachment `xml:"FileAttachment"`
+}
+
+type GetFileAttachment struct {
+	AttachmentId   AttachmentId `xml:"AttachmentId"`
+	Name           string       `xml:"Name"`
+	ContentType    string       `xml:"ContentType"`
+	Content        string       `xml:"Content"`
+	IsInline       bool         `xml:"IsInline"`
+	IsContactPhoto bool         `xml:"IsContactPhoto"`
 }
 
 // https://docs.microsoft.com/en-us/exchange/client-developer/web-service-reference/getattachment-operation
