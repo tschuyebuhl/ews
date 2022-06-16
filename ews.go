@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httputil"
+	"os"
 )
 
 const (
@@ -113,6 +114,15 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 }
 
 func applyConfig(config *Config, client *http.Client) {
+
+	godebug := os.Getenv("GODEBUG")
+	if godebug != "" {
+		godebug += ","
+	}
+	godebug += "http2client=0"
+
+	_ = os.Setenv("GODEBUG", godebug)
+
 	if config.NTLM {
 		client.Transport = ntlmssp.Negotiator{}
 	}
