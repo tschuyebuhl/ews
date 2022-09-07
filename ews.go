@@ -38,10 +38,10 @@ type Client interface {
 }
 
 type client struct {
-	EWSAddr  string
-	Username string
-	Password string
-	config   *Config
+	EWSAddr string
+	Email   string
+	Login   LoginStrategy
+	config  *Config
 }
 
 func (c *client) GetEWSAddr() string {
@@ -49,16 +49,16 @@ func (c *client) GetEWSAddr() string {
 }
 
 func (c *client) GetUsername() string {
-	return c.Username
+	return c.Email
 }
 
 func NewClient(ewsAddr, username, password string, config *Config) Client {
-	return &client{
-		EWSAddr:  ewsAddr,
-		Username: username,
-		Password: password,
-		config:   config,
-	}
+	return NewClientWithLoginStrategy(ewsAddr, username, PlainLogin{
+		Username: username, Password: password}, config)
+}
+
+func NewClientWithLoginStrategy(ewsAddr, email string, loginStrategy LoginStrategy, config *Config) Client {
+	return &client{EWSAddr: ewsAddr, Email: email, Login: loginStrategy, config: config}
 }
 
 func (c *client) SendAndReceive(body []byte) ([]byte, error) {
@@ -79,7 +79,7 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 	}(req.Body)
 	logRequest(c, req)
 
-	req.SetBasicAuth(c.Username, c.Password)
+	c.Login.SetLoginHeaders(req)
 	req.Header.Set("Content-Type", "text/xml")
 
 	client := &http.Client{
