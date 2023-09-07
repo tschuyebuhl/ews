@@ -114,7 +114,6 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 }
 
 func applyConfig(config *Config, client *http.Client) {
-
 	godebug := os.Getenv("GODEBUG")
 	if godebug != "" {
 		godebug += ","
@@ -123,11 +122,18 @@ func applyConfig(config *Config, client *http.Client) {
 
 	_ = os.Setenv("GODEBUG", godebug)
 
-	if config.NTLM {
-		client.Transport = ntlmssp.Negotiator{}
-	}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
 	if config.SkipTLS {
-		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+		transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	}
+
+	if config.NTLM {
+		transport.MaxConnsPerHost = 1
+		client.Transport = ntlmssp.Negotiator{
+			RoundTripper: transport,
+		}
+	} else {
+		client.Transport = transport
 	}
 }
 
