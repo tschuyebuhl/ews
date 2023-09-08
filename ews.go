@@ -6,10 +6,11 @@ import (
 	"fmt"
 	"github.com/Azure/go-ntlmssp"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httputil"
 	"os"
+	"strings"
+	"sync"
 )
 
 const (
@@ -29,6 +30,7 @@ type Config struct {
 	Dump    bool
 	NTLM    bool
 	SkipTLS bool
+	RTMutex *sync.Mutex
 }
 
 type Client interface {
@@ -105,7 +107,7 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 		return nil, NewError(resp)
 	}
 
-	respBytes, err := ioutil.ReadAll(resp.Body)
+	respBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -113,14 +115,28 @@ func (c *client) SendAndReceive(body []byte) ([]byte, error) {
 	return respBytes, err
 }
 
+type mutexRT struct {
+	mtx *sync.Mutex
+	rt  http.RoundTripper
+}
+
+func (m *mutexRT) RoundTrip(r *http.Request) (*http.Response, error) {
+	if m.mtx != nil {
+		m.mtx.Lock()
+		defer m.mtx.Unlock()
+	}
+	return m.rt.RoundTrip(r)
+}
+
 func applyConfig(config *Config, client *http.Client) {
 	godebug := os.Getenv("GODEBUG")
-	if godebug != "" {
-		godebug += ","
+	if !strings.Contains(godebug, "http2client=0") {
+		if godebug != "" {
+			godebug += ","
+		}
+		godebug += "http2client=0"
+		_ = os.Setenv("GODEBUG", godebug)
 	}
-	godebug += "http2client=0"
-
-	_ = os.Setenv("GODEBUG", godebug)
 
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	if config.SkipTLS {
@@ -129,9 +145,9 @@ func applyConfig(config *Config, client *http.Client) {
 
 	if config.NTLM {
 		transport.MaxConnsPerHost = 1
-		client.Transport = ntlmssp.Negotiator{
+		client.Transport = &mutexRT{mtx: config.RTMutex, rt: ntlmssp.Negotiator{
 			RoundTripper: transport,
-		}
+		}}
 	} else {
 		client.Transport = transport
 	}
