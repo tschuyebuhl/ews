@@ -13,12 +13,12 @@ func FindEmail(c ews.Client, q string, isEqual bool) (*ews.RootFolder, error) {
 				{FieldURI: "item:Subject"},
 			},
 		}},
-		IndexedPageItemView: ews.IndexedPageItemView{
+		IndexedPageItemView: &ews.IndexedPageItemView{
 			MaxEntriesReturned: 5,
 			Offset:             0,
 			BasePoint:          ews.BasePointBeginning,
 		},
-		Restriction:     ews.Restriction{},
+		Restriction:     &ews.Restriction{},
 		ParentFolderIds: ews.ParentFolderIds{DistinguishedFolderId: ews.DistinguishedFolderId{Id: "inbox"}},
 	}
 
