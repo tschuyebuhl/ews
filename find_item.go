@@ -6,12 +6,12 @@ import (
 )
 
 type FindItemRequest struct {
-	XMLName             struct{}            `xml:"m:FindItem"`
-	Traversal           string              `xml:"Traversal,attr"`
-	ItemShape           ItemShape           `xml:"m:ItemShape"`
-	IndexedPageItemView IndexedPageItemView `xml:"m:IndexedPageItemView"`
-	ParentFolderIds     ParentFolderIds     `xml:"m:ParentFolderIds"`
-	Restriction         Restriction         `xml:"m:Restriction"`
+	XMLName             struct{}             `xml:"m:FindItem"`
+	Traversal           string               `xml:"Traversal,attr"`
+	ItemShape           ItemShape            `xml:"m:ItemShape"`
+	IndexedPageItemView *IndexedPageItemView `xml:"m:IndexedPageItemView,omitempty"`
+	ParentFolderIds     ParentFolderIds      `xml:"m:ParentFolderIds,omitempty"`
+	Restriction         *Restriction         `xml:"m:Restriction,omitempty"`
 }
 
 type ItemShape struct {

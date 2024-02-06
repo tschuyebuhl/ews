@@ -16,12 +16,12 @@ func Test_marshal_FindItemContains(t *testing.T) {
 				{FieldURI: "item:Subject"},
 			},
 		}},
-		IndexedPageItemView: IndexedPageItemView{
+		IndexedPageItemView: &IndexedPageItemView{
 			MaxEntriesReturned: 5,
 			Offset:             0,
 			BasePoint:          BasePointBeginning,
 		},
-		Restriction:     Restriction{},
+		Restriction:     &Restriction{},
 		ParentFolderIds: ParentFolderIds{DistinguishedFolderId: DistinguishedFolderId{Id: "inbox"}},
 	}
 
@@ -74,12 +74,12 @@ func Test_marshal_FindItemIsEqualTo(t *testing.T) {
 				{FieldURI: "item:Subject"},
 			},
 		}},
-		IndexedPageItemView: IndexedPageItemView{
+		IndexedPageItemView: &IndexedPageItemView{
 			MaxEntriesReturned: 5,
 			Offset:             0,
 			BasePoint:          BasePointBeginning,
 		},
-		Restriction:     Restriction{},
+		Restriction:     &Restriction{},
 		ParentFolderIds: ParentFolderIds{DistinguishedFolderId: DistinguishedFolderId{Id: "inbox"}},
 	}
 
@@ -122,4 +122,24 @@ func Test_marshal_FindItemIsEqualTo(t *testing.T) {
     </t:IsEqualTo>
   </m:Restriction>
 </m:FindItem>`, string(xmlBytes))
+}
+
+func Test_Marshal_CalendarItems(t *testing.T) {
+	req := FindItemRequest{
+		Traversal: "Shallow",
+		ItemShape: ItemShape{
+			BaseShape:            BaseShapeIdOnly,
+			AdditionalProperties: AdditionalProperties{FieldURI: []FieldURI{{"item:Subject"}, {"calendar:Start"}, {"calendar:End"}}},
+		},
+		ParentFolderIds: ParentFolderIds{
+			DistinguishedFolderId: DistinguishedFolderId{
+				Id: "calendar",
+			},
+		},
+	}
+	xmlBytes, err := xml.MarshalIndent(req, "", "  ")
+	if err != nil {
+		log.Fatal(err)
+	}
+	t.Log(string(xmlBytes))
 }
