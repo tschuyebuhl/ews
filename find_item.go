@@ -74,9 +74,9 @@ type FindItemResponseMessage struct {
 
 type RootFolder struct {
 	Items                   FindItems `xml:"Items"`
-	IndexedPagingOffset     int       `xml:"IndexedPagingOffset,attr"`
-	TotalItemsInView        int       `xml:"TotalItemsInView,attr"`
-	IncludesLastItemInRange bool      `xml:"IncludesLastItemInRange,attr"`
+	IndexedPagingOffset     *int      `xml:"IndexedPagingOffset,attr"`
+	TotalItemsInView        *int      `xml:"TotalItemsInView,attr"`
+	IncludesLastItemInRange *bool     `xml:"IncludesLastItemInRange,attr"`
 }
 
 type FindItems struct {
