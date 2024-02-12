@@ -80,12 +80,14 @@ type RootFolder struct {
 }
 
 type FindItems struct {
-	Message []FindItemMessage `xml:"Message"`
+	Message []FindItemMessage `xml:"CalendarItem"` // hardcoded this shit, breaks finding messages but fixes finding calendar events i guess
 }
 
 type FindItemMessage struct {
 	ItemId  ItemId `xml:"ItemId"`
 	Subject string `xml:"Subject"`
+	Start   Time   `xml:"Start"`
+	End     Time   `xml:"End"`
 }
 
 // https://docs.microsoft.com/en-us/exchange/client-developer/web-service-reference/finditem-operation
