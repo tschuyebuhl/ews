@@ -81,6 +81,9 @@ type Mailbox struct {
 type Attendee struct {
 	Mailbox Mailbox `xml:"t:Mailbox"`
 }
+type Organizer struct {
+	Mailbox Mailbox `xml:"t:Mailbox"`
+}
 
 type Attendees struct {
 	Attendee []Attendee `xml:"t:Attendee"`
