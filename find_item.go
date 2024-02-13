@@ -88,7 +88,7 @@ type FindItemMessage struct {
 	Subject   string    `xml:"Subject"`
 	Start     Time      `xml:"Start"`
 	End       Time      `xml:"End"`
-	Organizer Organizer `xml:"Organizer"`
+	Organizer Organizer `xml:"t:Organizer"`
 	Required  []string  `xml:"RequiredAttendees"`
 	Optional  []string  `xml:"OptionalAttendees"`
 }

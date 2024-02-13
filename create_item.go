@@ -74,6 +74,8 @@ type XMailbox struct {
 type Mailbox struct {
 	EmailAddress string `xml:"t:EmailAddress"`
 	Name         string `xml:"t:Name"`
+	RoutingType  string `xml:"t:RoutingType"`
+	MailboxType  string `xml:"t:MailboxType"`
 }
 
 type Attendee struct {
