@@ -84,13 +84,13 @@ type FindItems struct {
 }
 
 type FindItemMessage struct {
-	ItemId    ItemId    `xml:"t:ItemId"`
-	Subject   string    `xml:"t:Subject"`
-	Start     Time      `xml:"t:Start"`
-	End       Time      `xml:"t:End"`
-	Organizer Organizer `xml:"t:Organizer"`
-	Required  []string  `xml:"t:RequiredAttendees"`
-	Optional  []string  `xml:"t:OptionalAttendees"`
+	ItemId    ItemId    `xml:"ItemId"`
+	Subject   string    `xml:"Subject"`
+	Start     Time      `xml:"Start"`
+	End       Time      `xml:"End"`
+	Organizer Organizer `xml:"Organizer"`
+	Required  []string  `xml:"RequiredAttendees"`
+	Optional  []string  `xml:"OptionalAttendees"`
 }
 
 // https://docs.microsoft.com/en-us/exchange/client-developer/web-service-reference/finditem-operation

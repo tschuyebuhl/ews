@@ -72,17 +72,17 @@ type XMailbox struct {
 }
 
 type Mailbox struct {
-	EmailAddress string `xml:"t:EmailAddress"`
-	Name         string `xml:"t:Name"`
-	RoutingType  string `xml:"t:RoutingType"`
-	MailboxType  string `xml:"t:MailboxType"`
+	EmailAddress string `xml:"EmailAddress"`
+	Name         string `xml:"Name"`
+	RoutingType  string `xml:"RoutingType"`
+	MailboxType  string `xml:"MailboxType"`
 }
 
 type Attendee struct {
 	Mailbox Mailbox `xml:"t:Mailbox"`
 }
 type Organizer struct {
-	Mailbox Mailbox `xml:"t:Mailbox"`
+	Mailbox Mailbox `xml:"Mailbox"`
 }
 
 type Attendees struct {
