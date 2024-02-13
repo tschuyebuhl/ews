@@ -6,9 +6,10 @@ import (
 )
 
 type DeleteItemRequest struct {
-	XMLName    struct{}            `xml:"m:DeleteItem"`
-	DeleteType string              `xml:"DeleteType,attr"`
-	Items      []DeleteItemMessage `xml:"m:ItemIds"`
+	XMLName                  struct{}            `xml:"m:DeleteItem"`
+	DeleteType               string              `xml:"DeleteType,attr"`
+	Items                    []DeleteItemMessage `xml:"m:ItemIds"`
+	SendMeetingCancellations *string             `xml:"SendMeetingCancellations,attr,omitempty"`
 }
 
 type DeleteItemMessage struct {
