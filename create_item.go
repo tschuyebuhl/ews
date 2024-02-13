@@ -73,6 +73,7 @@ type XMailbox struct {
 
 type Mailbox struct {
 	EmailAddress string `xml:"t:EmailAddress"`
+	Name         string `xml:"t:Name"`
 }
 
 type Attendee struct {

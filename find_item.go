@@ -94,7 +94,7 @@ type FindItemMessage struct {
 }
 
 type Organizer struct {
-	Mailbox Mailbox `xml:"Mailbox"`
+	Mailbox Mailbox `xml:"t:Mailbox"`
 }
 
 // https://docs.microsoft.com/en-us/exchange/client-developer/web-service-reference/finditem-operation
