@@ -89,8 +89,8 @@ type FindItemMessage struct {
 	Start     Time      `xml:"Start"`
 	End       Time      `xml:"End"`
 	Organizer Organizer `xml:"Organizer"`
-	Required  []string  `xml:"RequiredAttendees"`
-	Optional  []string  `xml:"OptionalAttendees"`
+	Required  Attendees `xml:"RequiredAttendees"`
+	Optional  Attendees `xml:"OptionalAttendees"`
 }
 
 // https://docs.microsoft.com/en-us/exchange/client-developer/web-service-reference/finditem-operation
