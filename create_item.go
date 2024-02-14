@@ -86,7 +86,7 @@ type Organizer struct {
 }
 
 type Attendees struct {
-	Attendee []Attendee `xml:"t:Attendee"`
+	Attendee []Attendee `xml:"Attendee"`
 }
 
 type createItemResponseBodyEnvelop struct {
