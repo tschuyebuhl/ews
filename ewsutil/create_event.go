@@ -24,16 +24,16 @@ func createEvent(
 
 	requiredAttendees := make([]ews.Attendee, len(to))
 	for i, tt := range to {
-		requiredAttendees[i] = ews.Attendee{Mailbox: ews.Mailbox{EmailAddress: tt}}
+		requiredAttendees[i] = ews.Attendee{Mailbox: ews.AttendeeMailbox{EmailAddress: tt}}
 	}
 
 	optionalAttendees := make([]ews.Attendee, len(optional))
 	for i, tt := range optional {
-		optionalAttendees[i] = ews.Attendee{Mailbox: ews.Mailbox{EmailAddress: tt}}
+		optionalAttendees[i] = ews.Attendee{Mailbox: ews.AttendeeMailbox{EmailAddress: tt}}
 	}
 
 	room := make([]ews.Attendee, 1)
-	room[0] = ews.Attendee{Mailbox: ews.Mailbox{EmailAddress: location}}
+	room[0] = ews.Attendee{Mailbox: ews.AttendeeMailbox{EmailAddress: location}}
 
 	m := ews.CalendarItem{
 		Subject: subject,
@@ -48,9 +48,9 @@ func createEvent(
 		IsAllDayEvent:              false,
 		LegacyFreeBusyStatus:       ews.BusyTypeBusy,
 		Location:                   location,
-		RequiredAttendees:          []ews.Attendees{{Attendee: requiredAttendees}},
-		OptionalAttendees:          []ews.Attendees{{Attendee: optionalAttendees}},
-		Resources:                  []ews.Attendees{{Attendee: room}},
+		RequiredAttendees:          []ews.MeetingAttendees{{Attendee: requiredAttendees}},
+		OptionalAttendees:          []ews.MeetingAttendees{{Attendee: optionalAttendees}},
+		Resources:                  []ews.MeetingAttendees{{Attendee: room}},
 	}
 
 	return ews.CreateCalendarItem(c, m)
