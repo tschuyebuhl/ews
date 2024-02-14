@@ -79,7 +79,7 @@ type Mailbox struct {
 }
 
 type Attendee struct {
-	Mailbox Mailbox `xml:"t:Mailbox"`
+	Mailbox Mailbox `xml:"Mailbox"`
 }
 type Organizer struct {
 	Mailbox Mailbox `xml:"Mailbox"`
