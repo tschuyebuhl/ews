@@ -44,18 +44,18 @@ type CreateFileAttachment struct {
 }
 
 type CalendarItem struct {
-	Subject                    string      `xml:"t:Subject"`
-	Body                       Body        `xml:"t:Body"`
-	ReminderIsSet              bool        `xml:"t:ReminderIsSet"`
-	ReminderMinutesBeforeStart int         `xml:"t:ReminderMinutesBeforeStart"`
-	Start                      time.Time   `xml:"t:Start"`
-	End                        time.Time   `xml:"t:End"`
-	IsAllDayEvent              bool        `xml:"t:IsAllDayEvent"`
-	LegacyFreeBusyStatus       string      `xml:"t:LegacyFreeBusyStatus"`
-	Location                   string      `xml:"t:Location"`
-	RequiredAttendees          []Attendees `xml:"t:RequiredAttendees"`
-	OptionalAttendees          []Attendees `xml:"t:OptionalAttendees"`
-	Resources                  []Attendees `xml:"t:Resources"`
+	Subject                    string             `xml:"t:Subject"`
+	Body                       Body               `xml:"t:Body"`
+	ReminderIsSet              bool               `xml:"t:ReminderIsSet"`
+	ReminderMinutesBeforeStart int                `xml:"t:ReminderMinutesBeforeStart"`
+	Start                      time.Time          `xml:"t:Start"`
+	End                        time.Time          `xml:"t:End"`
+	IsAllDayEvent              bool               `xml:"t:IsAllDayEvent"`
+	LegacyFreeBusyStatus       string             `xml:"t:LegacyFreeBusyStatus"`
+	Location                   string             `xml:"t:Location"`
+	RequiredAttendees          []MeetingAttendees `xml:"t:RequiredAttendees"`
+	OptionalAttendees          []MeetingAttendees `xml:"t:OptionalAttendees"`
+	Resources                  []MeetingAttendees `xml:"t:Resources"`
 }
 
 type Body struct {
@@ -78,15 +78,27 @@ type Mailbox struct {
 	MailboxType  string `xml:"MailboxType"`
 }
 
-type Attendee struct {
-	Mailbox Mailbox `xml:"Mailbox"`
+type AttendeeMailbox struct {
+	EmailAddress string `xml:"t:EmailAddress"`
+	Name         string `xml:"t:Name"`
+	RoutingType  string `xml:"t:RoutingType"`
+	MailboxType  string `xml:"t:MailboxType"`
 }
+
+type Attendee struct {
+	Mailbox AttendeeMailbox `xml:"t:Mailbox"`
+}
+
 type Organizer struct {
 	Mailbox Mailbox `xml:"Mailbox"`
 }
 
 type Attendees struct {
 	Attendee []Attendee `xml:"Attendee"`
+}
+
+type MeetingAttendees struct {
+	Attendee []Attendee `xml:"t:Attendee"`
 }
 
 type createItemResponseBodyEnvelop struct {
